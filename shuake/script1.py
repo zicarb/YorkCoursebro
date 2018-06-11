@@ -7,32 +7,26 @@ import time
 import unittest
 
 
-class CourseTestSelect(unittest.TestCase):
-
+class CourseSelect(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome('/Users/zombie/PycharmProjects/shuake/chromedriver')
-        self.driver.get("https://registar.yorku.ca")
+        self.driver.get("https://wrem.sis.yorku.ca/Apps/WebObjects/REM")
 
-    def testGotopage(self):
+    def testLogin(self):
         driver = self.driver
         PassportUsername = "zhx1997"
-        PassportPassword ="zyx2018"
+        PassportPassword = "zyx2018"
         term = int(1)
-        time.sleep(5)
+        wait = WebDriverWait(driver,20)
 
-        EnrollinclassXpath = "//*[@id='courses']/ul/li[6]/a"
-        EnrollinclasseElement = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(EnrollinclassXpath))
-        EnrollinclasseElement.click()
-
-        driver = driver.current_window_handle
-        AccountNameId    = "mli"
+        accountNameId    = "mli"
         passFieldId      = "password"
-        LoginButtonXpath = "//input[@value = 'Login']"
+        loginButtonXpath = "/html/body/div[3]/div[2]/div[1]/form/div[2]/div[2]/p[2]/input"
 
-        AccountNameIdElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(AccountNameId))
-        passFieldIdElement   = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(passFieldId))
-        LoginButtonElement   = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(LoginButtonXpath))
+        AccountNameIdElement = wait.until(lambda driver: driver.find_element_by_id(accountNameId))
+        passFieldIdElement   = wait.until(lambda driver: driver.find_element_by_id(passFieldId))
 
+        LoginButtonElement   = wait.until(lambda driver: driver.find_element_by_xpath(loginButtonXpath))
         AccountNameIdElement.clear()
         AccountNameIdElement.send_keys(PassportUsername)
         time.sleep(3)
@@ -40,15 +34,13 @@ class CourseTestSelect(unittest.TestCase):
         passFieldIdElement.send_keys(PassportPassword)
         time.sleep(3)
         LoginButtonElement.click()
-
-        driver = driver.current_window_handle
-        select = Select(driver.find_element_by_value())
-        select.select_by_value(term)
-        driver.find_element_by_id("submit").click()
-
+        driver=driver.current_window_handle
+        driver
     def tearDown(self):
         self.driver.quit()
 
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == '__main__':
+   unittest.main()
+
+
