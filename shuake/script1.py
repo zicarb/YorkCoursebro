@@ -7,7 +7,7 @@ import time
 import unittest
 
 
-class CourseSelect(unittest.TestCase):
+class CourseSelect4(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome('/Users/zombie/PycharmProjects/shuake/chromedriver')
         self.driver.get("https://wrem.sis.yorku.ca/Apps/WebObjects/REM")
@@ -29,17 +29,17 @@ class CourseSelect(unittest.TestCase):
         LoginButtonElement   = wait.until(lambda driver: driver.find_element_by_xpath(loginButtonXpath))
         AccountNameIdElement.clear()
         AccountNameIdElement.send_keys(PassportUsername)
-        time.sleep(3)
+
         passFieldIdElement.clear()
         passFieldIdElement.send_keys(PassportPassword)
-        time.sleep(3)
+
         LoginButtonElement.click()
 
         enrollPageXpath = "/html/body/form/div[1]/table/tbody/tr[2]/td[2]/span/b"
         wait.until(lambda driver: driver.find_element_by_xpath(enrollPageXpath))
 
         submitButtonXpath = "/html/body/form/div[1]/table/tbody/tr[4]/td[2]/table/tbody/tr/td/table/tbody/tr[3]/td[2]/input"
-
+        
         select = Select(driver.find_element_by_xpath(
             '/html/body/form/div[1]/table/tbody/tr[4]/td[2]/table/tbody/tr/td/table/tbody/tr[2]/td[2]/span/select'))
         select.select_by_visible_text('FALL/WINTER 2018-2019 UNDERGRADUATE STUDENTS')
@@ -61,19 +61,15 @@ class CourseSelect(unittest.TestCase):
         yesButtonXpath="/html/body/form/div[1]/table/tbody/tr[4]/td[2]/table/tbody/tr/td/table[2]/tbody/tr[6]/td[2]/input[1]"
         yesButtonElement = wait.until(lambda driver: driver.find_element_by_xpath(yesButtonXpath))
         yesButtonElement.click()
-
-        continueButtonXpath = "/html/body/form/div[1]/table/tbody/tr[4]/td[2]/table/tbody/tr/td/table[2]/tbody/tr[7]/td[2]/span/input"
-        continueButtonElement= wait.until(lambda driver: driver.find_element_by_xpath(continueButtonXpath))
-        continueButtonElement.click()
+        check1Xpath = '/html/body/form/div[1]/table/tbody/tr[4]/td[2]/table/tbody/tr/td/table[2]/tbody/tr[2]/td[2]/span/font/b'
+        try:
+            wait.until(lambda driver: driver.find_element_by_xpath(check1Xpath))
+        except:
+            driver.save_screenshot('xxx.png')
 
     def tearDown(self):
         pass
 
 
-
-
-
 if __name__ == '__main__':
    unittest.main()
-
-
